@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Terraria;
-using TerrariaApi;
+using Terraria.Localization;
 
-namespace Wolfje.Plugins.EnglishPlox {
-    [TerrariaApi.Server.ApiVersion(1, 20)]
+namespace Wolfje.Plugins.EnglishPlox
+{
+    [TerrariaApi.Server.ApiVersion(2, 1)]
     public class EnglishPloxPlugin : TerrariaApi.Server.TerrariaPlugin {
         public static readonly Regex invalidCharactersRegex = new Regex(@"[^\da-z!@#\$%\^\&\*\(\)\-\+~ ;{}|\[\]:\.,_`]", RegexOptions.IgnoreCase);
 
@@ -57,7 +56,7 @@ namespace Wolfje.Plugins.EnglishPlox {
                 foreach (Match m in invalidCharactersRegex.Matches(player.name)) {
                     sb.Append(m.Value);
                 }
-                Terraria.NetMessage.SendData((int)PacketTypes.Disconnect, player.whoAmI, text: "Your name cannot contain these characters: " + sb.ToString());
+                NetMessage.SendData((int)PacketTypes.Disconnect, player.whoAmI, text: NetworkText.FromLiteral("Your name cannot contain these characters: " + sb.ToString()));
             }
         }
 
